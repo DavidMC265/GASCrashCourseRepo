@@ -19,10 +19,11 @@ void ACC_PlayerController::SetupInputComponent()
     UEnhancedInputComponent* EnhancedInputComponent = Cast<UEnhancedInputComponent>(InputComponent);
     if (!IsValid(EnhancedInputComponent)) return;
 
-    EnhancedInputComponent->BindAction(JumpAction, ETriggerEvent::Started, this, &ThisClass::Jump);
-    EnhancedInputComponent->BindAction(JumpAction, ETriggerEvent::Completed, this, &ThisClass::StopJumping);
-    EnhancedInputComponent->BindAction(MoveAction, ETriggerEvent::Triggered, this, &ThisClass::Move);
-    EnhancedInputComponent->BindAction(LookAction, ETriggerEvent::Triggered, this, &ThisClass::Look);
+    EnhancedInputComponent->BindAction(JumpAction, ETriggerEvent::Started, this, &ACC_PlayerController::Jump);
+    EnhancedInputComponent->BindAction(JumpAction, ETriggerEvent::Completed, this, &ACC_PlayerController::StopJumping);
+    EnhancedInputComponent->BindAction(MoveAction, ETriggerEvent::Triggered, this, &ACC_PlayerController::Move);
+    EnhancedInputComponent->BindAction(LookAction, ETriggerEvent::Triggered, this, &ACC_PlayerController::Look);
+    EnhancedInputComponent->BindAction(PrimaryAction, ETriggerEvent::Started, this, &ACC_PlayerController::Primary);
 }
 
 void ACC_PlayerController::Jump()
@@ -60,5 +61,9 @@ void ACC_PlayerController::Look(const FInputActionValue& Value)
 
     AddYawInput(LookAxisVector.X);
     AddPitchInput(LookAxisVector.Y);
+}
 
+void ACC_PlayerController::Primary()
+{
+    UE_LOG(LogTemp, Warning, TEXT("Primary Action called!"));
 }
